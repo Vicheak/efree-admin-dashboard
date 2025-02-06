@@ -6,7 +6,7 @@ WORKDIR /src
 
 # Install dependencies and build
 FROM base as build
-COPY --link package.json package-lock.json .
+COPY --link package.json .
 RUN npm install --force
 COPY --link . .
 RUN npm run build
