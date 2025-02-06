@@ -1,0 +1,77 @@
+{
+  "data": [
+    {
+      "path": "/",
+      "title": "dashboard",
+      "key": "dashboard",
+      "icon": "solar:widget-5-linear",
+      "iconf": "fill-home",
+      "type": "link",
+      "active": false
+    },
+    {
+      "path": "/company",
+      "title": "company",
+      "key": "company",
+      "icon": "tabler:building",
+      "iconf": "fill-learning",
+      "type": "link"
+    },
+    {
+      "path": "/branch",
+      "title": "branch",
+      "key": "branch",
+      "icon": "tabler:building-community",
+      "iconf": "fill-home",
+      "type": "link"
+    },
+    {
+      "title": "users",
+      "icon": "solar:users-group-rounded-line-duotone",
+      "iconf": "fill-user",
+      "type": "sub",
+      "children": [
+        {
+          "path": "/users/user_list",
+          "key": "user_list",
+          "title": "user_list",
+          "type": "link"
+        },
+        {
+          "path": "/users/user_role",
+          "title": "user_role",
+          "key": "user_role",
+          "type": "link"
+        },
+        {
+          "path": "/users/user_log",
+          "title": "user_log",
+          "key": "user_log",
+          "type": "link"
+        },
+        {
+          "path": "/users/ip-address",
+          "title": "ip-address",
+          "key": "ip_address",
+          "type": "link"
+        }
+      ]
+    },
+    {
+      "title": "developer",
+      "icon": "ph:code-light",
+      "iconf": "fill-user",
+      "type": "sub",
+      "badgeType": "light-primary",
+      "badgeValue": "2",
+      "children": [
+        {
+          "title": "module",
+          "path": "/developer/module",
+          "key": "module",
+          "type": "link"
+        }
+      ]
+    }
+  ]
+}
