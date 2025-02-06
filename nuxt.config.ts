@@ -131,7 +131,7 @@ export default defineNuxtConfig({
       build: {
           chunkSizeWarningLimit: 10000
       }
-  }
+  },
   experimental: {
     payloadExtraction: false,
   },
