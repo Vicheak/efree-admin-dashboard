@@ -12,23 +12,23 @@ pipeline {
     }
 
     stages {
-        // stage('Build Admin Dashboard') {
-        //     steps {
-        //         sh 'echo "Building Admin Dashboard..."'
-        //         sh 'ls -lart'
-        //         script {
-        //             docker.withRegistry("", "${BASE_REGISTRY}") {
-        //                 def adminDashboardImage = docker.build("${FULL_IMAGE_NAME}", "-f Dockerfile .")
-        //                 adminDashboardImage.push()
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Build Admin Dashboard') {
+            steps {
+                sh 'echo "Building Admin Dashboard..."'
+                sh 'ls -lart'
+                script {
+                    docker.withRegistry("", "${BASE_REGISTRY}") {
+                        def adminDashboardImage = docker.build("${FULL_IMAGE_NAME}", "-f Dockerfile .")
+                        adminDashboardImage.push()
+                    }
+                }
+            }
+        }
 
         stage('Update Deployment Manifest') {
             steps {
                 sh """
-                    yq eval '.spec.template.spec.containers[0].image = "vicheak/efree-admin-dashboard:1.0.10"' -i pipeline/deployment.yaml
+                    yq eval '.spec.template.spec.containers[0].image = "${FULL_IMAGE_NAME}"' -i pipeline/deployment.yaml
                 """
             }
         }
