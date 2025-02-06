@@ -15,7 +15,7 @@ pipeline {
                 sh 'ls -lart'
                 script {
                     docker.withRegistry("", "${BASE_REGISTRY}") {
-                        def adminDashboardImage = docker.build("$BASE_REGISTRY_USER/efree-admin-dashboard:$VERSION")
+                        def adminDashboardImage = docker.build("$BASE_REGISTRY_USER/efree-admin-dashboard:$VERSION", "-f Dockerfile .")
                         adminDashboardImage.push()
                     }
                 }
