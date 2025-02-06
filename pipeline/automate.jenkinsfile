@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_HOST = 'tcp://localhost:2375'
         ENV = "${env.GIT_BRANCH == 'origin/prod' ? 'prod' : 'dev'}"
         TELEGRAM_TOKEN = credentials('telegram-token')
         IMAGE_NAME = "efree-admin-dashboard"
