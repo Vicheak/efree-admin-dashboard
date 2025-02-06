@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: admin-dashboard-service
-        image: ${IMAGE}
+        image: ${FULL_IMAGE_NAME}
         ports:
         - containerPort: 3000
 ---
