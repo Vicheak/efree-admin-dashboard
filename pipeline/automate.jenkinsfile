@@ -15,12 +15,13 @@ pipeline {
             steps {
                 sh 'echo "Building Admin Dashboard..."'
                 sh 'ls -lart'
-                script {
-                    docker.withRegistry("", "${BASE_REGISTRY}") {
-                        def adminDashboardImage = docker.build("${BASE_REGISTRY_USER}/${IMAGE_NAME}:${VERSION}", "-f Dockerfile .")
-                        adminDashboardImage.push()
-                    }
-                }
+                sh 'docker version'
+                // script {
+                //     docker.withRegistry("", "${BASE_REGISTRY}") {
+                //         def adminDashboardImage = docker.build("${BASE_REGISTRY_USER}/${IMAGE_NAME}:${VERSION}", "-f Dockerfile .")
+                //         adminDashboardImage.push()
+                //     }
+                // }
             }
         }
     }
