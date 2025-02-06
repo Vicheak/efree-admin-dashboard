@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         DOCKER_HOST = 'tcp://localhost:2375'
-        ENV = "${env.GIT_BRANCH == 'origin/prod' ? 'prod' : 'dev'}"
+        ENV = "${env.GIT_BRANCH == 'origin/main' ? 'prod' : 'dev'}"
         TELEGRAM_TOKEN = credentials('telegram-token')
         IMAGE_NAME = "efree-admin-dashboard"
         VERSION = "1.0.${env.BUILD_NUMBER}"
@@ -15,13 +15,12 @@ pipeline {
             steps {
                 sh 'echo "Building Admin Dashboard..."'
                 sh 'ls -lart'
-                sh 'docker version'
-                // script {
-                //     docker.withRegistry("", "${BASE_REGISTRY}") {
-                //         def adminDashboardImage = docker.build("${BASE_REGISTRY_USER}/${IMAGE_NAME}:${VERSION}", "-f Dockerfile .")
-                //         adminDashboardImage.push()
-                //     }
-                // }
+                script {
+                    docker.withRegistry("", "${BASE_REGISTRY}") {
+                        def adminDashboardImage = docker.build("${BASE_REGISTRY_USER}/${IMAGE_NAME}:${VERSION}", "-f Dockerfile .")
+                        adminDashboardImage.push()
+                    }
+                }
             }
         }
     }
