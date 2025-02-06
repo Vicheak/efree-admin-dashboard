@@ -1,0 +1,10 @@
+.nuxt
+# .env
+.output
+dist
+package-lock.json
+yarn-error.log
+yarn.lock
+pnpm-lock.yaml
+node_modules
+public/firebase-messaging-sw.js
