@@ -6,10 +6,10 @@ WORKDIR /src
 
 # Install dependencies and build
 FROM base as build
-COPY --link package.json package-lock.json .
-RUN npm install --production 
+COPY --link package.json .
+RUN npm install --production --legacy-peer-deps
 COPY --link . .  
-RUN npm run build  
+RUN npm run build
 
 # Run the application in a production-ready environment
 FROM base
