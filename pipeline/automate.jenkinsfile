@@ -28,7 +28,7 @@ pipeline {
         stage('Update Deployment Manifest') {
             steps {
                 sh """
-                    yq eval '.spec.template.spec.containers[0].image = \"${FULL_IMAGE_NAME}\"' -i pipeline/admin-dashboard.yaml
+                    yq eval '.spec.template.spec.containers[0].image = ${FULL_IMAGE_NAME}' -i pipeline/admin-dashboard.yaml
                 """
             }
         }
