@@ -7,7 +7,7 @@ WORKDIR /src
 # Install dependencies and build
 FROM base as build
 COPY --link package.json .
-RUN npm install --legacy-peer-deps
+RUN npm install --force
 COPY --link . .  
 RUN npm run build
 
