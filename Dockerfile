@@ -1,31 +1,34 @@
-# Use ARG for Node version and set base image
+# Use a lightweight Node.js image
 ARG NODE_VERSION=21.7.3
-FROM node:${NODE_VERSION}-slim as base
-ARG PORT=3000
-WORKDIR /src
+FROM node:${NODE_VERSION}-alpine AS builder
 
-# Install system dependencies required for sharp
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libvips-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package.json ./
+# Install system dependencies for sharp
+RUN apk add --no-cache \
+    build-base \
+    vips-dev 
 
-# Install dependencies
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of the application files
+# Copy source code and build the app
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Run the application in a production-ready environment
-FROM base as production
-ENV PORT=$PORT
+# Final stage for production
+FROM node:${NODE_VERSION}-alpine AS production
+
+WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=base /src/.output /src/.output
-EXPOSE $PORT
+
+# Copy only the built output
+COPY --from=builder /app/.output /app/.output
+
+# Expose the application port
+EXPOSE 3000
+
+# Start the Nuxt application
 CMD ["node", ".output/server/index.mjs"]
