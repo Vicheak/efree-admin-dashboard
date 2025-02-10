@@ -13,7 +13,11 @@ RUN apt-get update && apt-get install -y \
 # Install dependencies and build
 FROM base as build
 COPY --link package.json package-lock.json* ./
-RUN if [ -f package-lock.json ]; then npm ci --legacy-peer-deps; else npm install --legacy-peer-deps; fi
+
+# Force install sharp and retry if it fails
+RUN if [ -f package-lock.json ]; then npm ci --legacy-peer-deps; else npm install --legacy-peer-deps; fi || \
+    (npm install sharp --force && npm install --legacy-peer-deps)
+
 COPY --link . .  
 RUN npm run build
 
