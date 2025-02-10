@@ -6,8 +6,8 @@ WORKDIR /src
 
 # Install dependencies and build
 FROM base as build
-COPY --link package.json .
-RUN npm ci --legacy-peer-deps 
+COPY --link package.json package-lock.json* ./
+RUN if [ -f package-lock.json ]; then npm ci --legacy-peer-deps; else npm install --legacy-peer-deps; fi
 COPY --link . .  
 RUN npm run build
 
