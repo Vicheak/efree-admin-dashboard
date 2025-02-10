@@ -4,6 +4,12 @@ FROM node:${NODE_VERSION}-slim as base
 ARG PORT=3000
 WORKDIR /src
 
+# Install system dependencies required for sharp
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install dependencies and build
 FROM base as build
 COPY --link package.json package-lock.json* ./
