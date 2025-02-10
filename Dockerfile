@@ -10,21 +10,22 @@ RUN apt-get update && apt-get install -y \
     libvips-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies and build
-FROM base as build
-COPY --link package.json package-lock.json* ./
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
 
-# Force install sharp and retry if it fails
-RUN if [ -f package-lock.json ]; then npm ci --legacy-peer-deps; else npm install --legacy-peer-deps; fi || \
-    (npm install sharp --force && npm install --legacy-peer-deps)
+# Install dependencies
+RUN npm install --legacy-peer-deps
 
-COPY --link . .  
+# Copy the rest of the application files
+COPY . .
+
+# Build the application
 RUN npm run build
 
 # Run the application in a production-ready environment
-FROM base
+FROM base as production
 ENV PORT=$PORT
 ENV NODE_ENV=production
-COPY --from=build /src/.output /src/.output 
+COPY --from=base /src/.output /src/.output
 EXPOSE $PORT
 CMD ["node", ".output/server/index.mjs"]
