@@ -11,7 +11,7 @@ RUN apk add --no-cache \
     vips-dev 
 
 # Copy package files and install dependencies
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install --legacy-peer-deps
 
 # Copy source code and build the app
